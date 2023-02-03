@@ -1,9 +1,20 @@
+require 'json'
+require_relative 'property'
 class Board
-    def initialize(name, price, colour, type)
-
+    def initialize
+        @properties = Array.new
     end
-
-    def load_board
-    
+    def load_board(json)
+        file = File.read(json)
+        file_hash = JSON.parse(file)
+        file_hash.each do |hash|
+            @properties << create_property(hash)
+        end
+        @properties
+    end
+    private 
+    def create_property(hash)
+        property = Property.new(hash)
+        property.get_hash
     end
 end
