@@ -1,20 +1,13 @@
 class Property
-    def initialize(name, price, colour, type)
-        @name = name
-        @price = price
-        @colour = colour
-        @type = type
+    attr_accessor :name, :price, :colour, :type
+    def initialize(hash)
+        @name = hash['name']
+        @price = hash['price'].nil? ? "n/a" : hash['price']
+        @colour = hash['colour'].nil? ? "n/a" : hash['colour']
+        @type = hash['type']
     end
-    def name 
-        @name
-    end
-    def price
-        @price
-    end
-    def colour
-        @colour
-    end
-    def type
-        @type
+    def get_hash
+        @hash = { :name => @name, :price => @price, :colour => @colour, :type => @type }
+        @hash
     end
 end
