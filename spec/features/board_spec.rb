@@ -10,5 +10,4 @@ RSpec.describe Board do
             expect(@board.load_board(@json).class).to eq(Array)
         end
     end
-
 end
