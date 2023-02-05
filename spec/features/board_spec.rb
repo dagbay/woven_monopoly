@@ -7,7 +7,7 @@ RSpec.describe Board do
     end
     describe 'JSON file' do
         it 'should be loaded' do
-            expect(@board.load_board(@json).class).to eq(Array)
+            expect(@board.load_properties(@json).count).to be > 0
         end
     end
 end
