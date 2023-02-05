@@ -17,8 +17,13 @@ class Player
     # Set Functions
     def pay_rent(num)
         @balance -= num
+        if @balance > 0
+            puts "You paid $#{num}. You now have $#{@balance} left in your balance."
+        else
+            puts "You are bankrupt!"
+        end
     end
-    def move_by(num)
-        @position += num
+    def move_by(num, limit)
+        # @position = @position>limit ? true : false
     end
 end
