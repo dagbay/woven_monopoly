@@ -24,6 +24,13 @@ class Player
         end
     end
     def move_by(num, limit)
-        # @position = @position>limit ? true : false
+        @position += num
+        puts "#{@name} moved #{num} times up the board"
+        if @position >= limit
+            @position = @position - limit
+            puts "However, #{@name} has reached the limit and has looped around the board. And is now at position: #{@position}"
+        else
+            puts "#{@name} is now at position: #{@position}"
+        end
     end
 end
