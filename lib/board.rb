@@ -4,7 +4,7 @@ class Board
     def initialize
         @properties = Array.new
     end
-    def load_board(json)
+    def load_properties(json)
         file = File.read(json)
         file_hash = JSON.parse(file)
         file_hash.each do |hash|
