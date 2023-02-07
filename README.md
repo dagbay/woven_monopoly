@@ -7,7 +7,7 @@ git checkout branch-name
 ### **The 'Straight to the Point' version**
 This is the main version and is on the '[**master**](https://github.com/dagbay/woven_monopoly/tree/master)' branch where it only outputs the end result of each game. 
 ### **The 'Print Each Action' version**
-This version is on the '[**puts_version_of_the_game**](https://github.com/dagbay/woven_monopoly/tree/puts_version_of_the_game)' branch where each dice roll gets printed on the console.
+This version is on the '[**puts_version_of_the_game**](https://github.com/dagbay/woven_monopoly/tree/puts_version_of_the_game)' branch where each dice roll gets printed on the console. (Keep in mind that this is an older version and some or all specs may not work.)
 ## How to run the game:
 Make sure you are in the main folder of where you saved the repository:
 ```
