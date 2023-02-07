@@ -5,7 +5,7 @@ require_relative 'player'
 class GameManager
 	def load_board
 		@board = Board.new.load_properties('board.json')
-		puts "Woven Monopoly: Board Successfully Loaded".red
+		puts "Game Manager Class: Better Play Fair!".blue
 	end
 	def load_players
 		@players = Array.new
@@ -34,5 +34,17 @@ class GameManager
 	end
 	def get_dice_rolls
 		@results
+	end
+	def after_game_report
+		richest_player = get_players.max { |a, b| a.get_balance <=> b.get_balance }
+		bankrupt_player = get_players.min { |a, b| a.get_balance <=> b.get_balance }
+		puts "--- THE GAME HAS ENDED ---".light_blue
+		puts " · What a close game!".light_blue
+		puts " · Unfortunately, #{bankrupt_player.get_name} ran out of money!".light_blue
+		get_players.each do |player|
+			puts " · #{player.get_name}'s has a balance of $#{player.get_balance} and finished on #{player.get_current_property.get_name}".light_blue
+		end
+		puts " · Therefore, the winner of this game is #{richest_player.get_name}!".light_blue
+		puts "--------------------------".light_blue
 	end
 end
