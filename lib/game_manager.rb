@@ -1,18 +1,17 @@
 require 'json'
-require 'colorize'
 require 'io/console'
 
 require_relative 'board'
 require_relative 'player'
 
 class GameManager
-	def load_board
-		@board = Board.new.load_properties('board.json')
+	def load_board(json)
+		@board = Board.new.load_properties(json)
 	end
 
-	def load_players
+	def load_players(json)
 		@players = Array.new
-		file = File.read('players.json')
+		file = File.read(json)
 		file_data = JSON.parse(file)
 		file_data.each do |name|
 			@players << Player.new(name, self)
@@ -24,8 +23,8 @@ class GameManager
 		determine_game_from_roll(json)
 
 		# Initialize board and players
-		load_board
-		load_players
+		load_board('board.json')
+		load_players('players.json')
 		
 		# Initialize variables
 		dice_rolls = get_dice_rolls
