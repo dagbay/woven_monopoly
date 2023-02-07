@@ -22,7 +22,11 @@ while current_roll < dice_rolls.length do
 	roll = dice_rolls[current_roll]
 
 	# Game Logic
-	players[current_player].move_by(roll, board.length - 1)
+    if players.any? { |player| player.bankrupt? }
+        break
+    end
+	    
+    players[current_player].move_by(roll, board.length)
 
     # Prompt for next turn or end of loop
     unless continue == true
@@ -35,3 +39,5 @@ while current_roll < dice_rolls.length do
 	current_player = (current_player + 1) % players.length
 	current_roll += 1
 end
+
+game.after_game_report
