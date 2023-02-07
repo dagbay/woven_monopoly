@@ -1,5 +1,3 @@
-require 'colorize'
-
 class Property
   def initialize(hash)
     @name = hash['name']
@@ -36,13 +34,11 @@ class Property
 
   def double_rent
     @price *= 2
-    puts " · #{get_name} has doubled its rent! The rent is now $#{get_price}.".red
   end
 
   # Set Function
   def set_owner(player)
     @owner = player
     @owned = true
-    puts " · #{player.get_name} has bought #{get_name} for $#{get_price}! Since no player owns it!".red
   end
 end

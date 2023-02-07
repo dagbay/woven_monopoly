@@ -8,7 +8,6 @@ require_relative 'player'
 class GameManager
 	def load_board
 		@board = Board.new.load_properties('board.json')
-		puts "Game Manager Class: Better Play Fair!".blue
 	end
 
 	def load_players
@@ -46,13 +45,6 @@ class GameManager
 				break
 			end
 			players[current_player].move_by(roll, board.length)
-
-			# Prompt for next turn or end of loop
-			unless continue == true
-				print "Press any key to continue or key \'Esc\' to go to the end of the loop: ".blue
-				input_value = $stdin.getch
-				continue = true if input_value == "\e"
-			end
 
 			# Go to next player and next roll
 			current_player = (current_player + 1) % players.length
