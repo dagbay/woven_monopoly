@@ -33,5 +33,5 @@ bundle exec rspec spec/features/name_of_spec.rb
 ## UML Class Diagram:
 ![alt text](./woven_monopoly_uml.png)
 ## Sources:
-### [ChatGPT](chat.openai.com/chat)
+### [ChatGPT](www.chat.openai.com/chat)
 - Generated RSpec boilerplates
