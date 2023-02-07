@@ -1,9 +1,11 @@
 require 'colorize'
+
 class Player 
 	def initialize(name)
 		@name = name
 		@balance = 16
 		@position = 0 
+		@properties = Array.new
 		@looped = false
 	end
 	# Get Functions
@@ -16,17 +18,35 @@ class Player
 	def get_position
 		@position
 	end
-	def check_loop
+	def get_properties
+		@properties
+	end
+	def looped?
 		@looped
+	end
+	def check_property(property)
+		if property.owned?
+			pay_rent(property.get_price)
+		else
+			buy_property(property)
+		end
 	end
 	# Set Functions
 	def pay_rent(num)
 		@balance -= num
 		if @balance > 0
-			puts "You paid $#{num}. You now have $#{get_balance} left in your balance."
+			@balance
 		else
-			puts "You are bankrupt!"
+			false
 		end
+	end
+	def receive
+		@balance += 1
+		@looped = false
+	end
+	def buy_property(property)
+		property.set_owner(get_name)
+		@properties << property
 	end
 	def move_by(num, limit)
 		puts "\n--- #{get_name}'s Turn ---".green
@@ -40,14 +60,7 @@ class Player
 		end
 		puts "--- End of Turn ---\n".green
 	end
-	def add_loop
-		@looped = true
-	end
 end
 
 # TODO: Complete the move_by logic
 # TODO: Check if you can make a generic function for colorizing the console
-
-player = Player.new("Daniel")
-player.move_by(3,10)
-player.move_by(7,10)
