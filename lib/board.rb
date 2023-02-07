@@ -15,6 +15,6 @@ class Board
   private 
   def create_property(hash)
     property = Property.new(hash)
-    property.get_hash
+    property
   end
 end
