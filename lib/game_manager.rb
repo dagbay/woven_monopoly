@@ -6,10 +6,12 @@ require_relative 'player'
 
 class GameManager
 
+	# Initializes the board and loads the properties into board.
 	def load_board(json)
 		@board = Board.new.load_properties(json)
 	end
 
+	# Initialize a players array where each name inside the json file creates a new players, passing in self to access get methods.
 	def load_players(json)
 		@players = Array.new
 		file = File.read(json)
@@ -19,6 +21,7 @@ class GameManager
 		end
 	end
 
+	# Determines the game ending from rolls json
 	def determine_game_from_roll(json)
 		@results = Array.new
 		file = File.read(json)
@@ -44,6 +47,7 @@ class GameManager
 		@results
 	end
 
+	# Function that starts the entire game.
 	def start_with_dice(json)
 		# Determine Game
 		determine_game_from_roll(json)
@@ -78,6 +82,7 @@ class GameManager
 		after_game_report
 	end
 
+	# Function that outputs the winners and where everyone was when a player got bankrupt.
 	def after_game_report
 		richest_player = get_players.max { |a, b| a.get_balance <=> b.get_balance }
 		bankrupt_player = get_players.min { |a, b| a.get_balance <=> b.get_balance }

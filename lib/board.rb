@@ -7,6 +7,7 @@ class Board
     @properties = Array.new
   end
 
+  # Creates a property for each hash and stores into @properties array.
   def load_properties(json)
     file = File.read(json)
     file_hash = JSON.parse(file)
@@ -18,6 +19,7 @@ class Board
 
   private 
   
+  # Takes in a hash and creates a property.
   def create_property(hash)
     property = Property.new(hash)
     property

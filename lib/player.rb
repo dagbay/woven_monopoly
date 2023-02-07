@@ -51,6 +51,7 @@ class Player
 	end
 
 	# Set Functions
+	# Main function that enacts the game determined by the json file.
 	def move_by(num, limit)
 		property = @game.get_property(get_position)
 		@position += num
@@ -73,14 +74,17 @@ class Player
 		@looped = true
 	end
 
+	# Function that visits property
 	def visit(property)
 		@current_property = property
+		# Receive a doller if the player has looped and has passed 'GO'
 		if looped? && get_position > 0
 			receive(1)
 		end
 		check_property(property)
 	end
 
+	# Checks property if it is owned.
 	def check_property(property)
 		return if property.get_name == "GO"
 		unless property.owned? 
@@ -93,6 +97,7 @@ class Player
 		end
 	end
 
+	# Buys the property but also checks if all owned properties are the same colour during the player's turn.
 	def buy_property(property)
 		@balance -= property.get_price
 		property.set_owner(self)
@@ -107,6 +112,7 @@ class Player
 		end
 	end
 
+	# Pays the owner rent if the player has enough money.
 	def pay_rent(num, owner)
 		@balance -= num
 		unless @balance >= 0
