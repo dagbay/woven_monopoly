@@ -1,9 +1,9 @@
 class Player 
-	def initialize(name, board)
+	def initialize(name, game)
 		@name = name
 		@balance = 16
 		@position = 0 
-		@board = board
+		@game = game
 		@bankrupt = false
 		@looped = false
 		@properties = Array.new
@@ -42,14 +42,22 @@ class Player
 		end
 	end
 
+	def view_game
+		@game
+	end
+
+	def looped?
+		@looped
+	end
+
 	# Set Functions
 	def move_by(num, limit)
-		property = @board.get_property(get_position)
+		property = @game.get_property(get_position)
 		@position += num
-		property = @board.get_property(get_position)
+		property = @game.get_property(get_position)
 		if get_position >= limit
 			@position = get_position - limit
-			property = @board.get_property(get_position)
+			property = @game.get_property(get_position)
 			has_looped(property)
 		end
 		visit(property)
@@ -59,10 +67,6 @@ class Player
 	
 	def file_for_bankruptcy
 		@bankrupt = true
-	end
-
-	def looped?
-		@looped
 	end
 
 	def has_looped(property)
