@@ -1,5 +1,9 @@
 # My Implementation of Woven Monopoly
 ## Access two different versions of this game:
+Once you have chosen which version you want to try, please be sure to:
+```
+git checkout branch-name
+```
 ### **The 'Straight to the Point' version**
 This is the main version and is on the '[**master**](https://github.com/dagbay/woven_monopoly/tree/master)' branch where it only outputs the end result of each game. 
 ### **The 'Print Each Action' version**
