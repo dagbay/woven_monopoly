@@ -1,11 +1,12 @@
 require 'json'
 require 'io/console'
-require 'colorize'
+# require 'colorize'
 
 require_relative 'board'
 require_relative 'player'
 
 class GameManager
+
 	def load_board(json)
 		@board = Board.new.load_properties(json)
 	end
@@ -17,6 +18,31 @@ class GameManager
 		file_data.each do |name|
 			@players << Player.new(name, self)
 		end
+	end
+
+	def determine_game_from_roll(json)
+		@results = Array.new
+		file = File.read(json)
+		file_data = JSON.parse(file)
+		file_data.each do |num|
+			@results << num
+		end
+	end
+
+	def get_board
+		@board
+	end
+
+	def get_property(index)
+		@board[index]
+	end
+
+	def get_players
+		@players
+	end
+
+	def get_dice_rolls
+		@results
 	end
 
 	def start_with_dice(json)
@@ -53,31 +79,6 @@ class GameManager
 		after_game_report
 	end
 
-	def determine_game_from_roll(json)
-		@results = Array.new
-		file = File.read(json)
-		file_data = JSON.parse(file)
-		file_data.each do |num|
-			@results << num
-		end
-	end
-
-	def get_board
-		@board
-	end
-
-	def get_property(index)
-		@board[index]
-	end
-
-	def get_players
-		@players
-	end
-
-	def get_dice_rolls
-		@results
-	end
-
 	def after_game_report
 		richest_player = get_players.max { |a, b| a.get_balance <=> b.get_balance }
 		bankrupt_player = get_players.min { |a, b| a.get_balance <=> b.get_balance }
@@ -89,6 +90,6 @@ class GameManager
 		  " · Therefore, the winner of this game is #{richest_player.get_name}!",
 		  "--------------------------\n"
 		].join("\n")
-		puts message.red
+		message
 	end
 end
