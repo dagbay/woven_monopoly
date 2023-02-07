@@ -30,7 +30,7 @@ Then simply type in the console:
 ```
 bundle exec rspec
 ```
-If you want to test a specific file repo. Simply type:
+If you want to test a specific file. Simply type:
 ```
 bundle exec rspec spec/features/name_of_spec.rb
 ```
