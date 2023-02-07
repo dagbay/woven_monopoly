@@ -1,4 +1,5 @@
 require 'colorize'
+
 class Player 
 	def initialize(name, board)
 		@name = name
@@ -65,6 +66,7 @@ class Player
 	end
 
 	private
+	
 	def file_for_bankruptcy
 		@bankrupt = true
 		puts " · #{get_name} has insufficient funds and has filed for bankruptcy!".red
@@ -133,6 +135,3 @@ class Player
 		puts " ··· End of Report ···\n".yellow
 	end
 end
-
-# TODO: Complete the move_by logic
-# TODO: Check if you can make a generic function for colorizing the console

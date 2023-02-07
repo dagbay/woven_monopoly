@@ -8,8 +8,9 @@ require_relative 'player'
 class GameManager
 	def load_board
 		@board = Board.new.load_properties('board.json')
-		# puts "Game Manager Class: Better Play Fair!".blue
+		puts "Game Manager Class: Better Play Fair!".blue
 	end
+
 	def load_players
 		@players = Array.new
 		file = File.read('players.json')
@@ -18,6 +19,7 @@ class GameManager
 			@players << Player.new(name, self)
 		end
 	end
+
 	def start_with_dice(json)
 		# Determine Game
 		determine_game_from_roll(json)
@@ -45,12 +47,12 @@ class GameManager
 			end
 			players[current_player].move_by(roll, board.length)
 
-			# # Prompt for next turn or end of loop
-			# unless continue == true
-			# 	print "Press any key to continue or key \'Esc\' to go to the end of the loop: ".blue
-			# 	input_value = $stdin.getch
-			# 	continue = true if input_value == "\e"
-			# end
+			# Prompt for next turn or end of loop
+			unless continue == true
+				print "Press any key to continue or key \'Esc\' to go to the end of the loop: ".blue
+				input_value = $stdin.getch
+				continue = true if input_value == "\e"
+			end
 
 			# Go to next player and next roll
 			current_player = (current_player + 1) % players.length
@@ -58,6 +60,7 @@ class GameManager
 		end
 		after_game_report
 	end
+
 	def determine_game_from_roll(json)
 		@results = Array.new
 		file = File.read(json)
@@ -66,18 +69,23 @@ class GameManager
 			@results << num
 		end
 	end
+
 	def get_board
 		@board
 	end
+
 	def get_property(index)
 		@board[index]
 	end
+
 	def get_players
 		@players
 	end
+
 	def get_dice_rolls
 		@results
 	end
+
 	def after_game_report
 		richest_player = get_players.max { |a, b| a.get_balance <=> b.get_balance }
 		bankrupt_player = get_players.min { |a, b| a.get_balance <=> b.get_balance }
@@ -90,5 +98,5 @@ class GameManager
 		  "--------------------------\n"
 		].join("\n")
 		puts message.red
-	  end
+	end
 end
