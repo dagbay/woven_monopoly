@@ -1,8 +1,10 @@
 require 'json'
+require 'colorize'
 require_relative 'property'
 class Board
   def initialize
     @properties = Array.new
+    puts "Board Class: Board Successfully Created!".blue
   end
   def load_properties(json)
     file = File.read(json)
