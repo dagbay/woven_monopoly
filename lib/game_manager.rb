@@ -1,11 +1,14 @@
 require 'json'
 require 'colorize'
+require 'io/console'
+
 require_relative 'board'
 require_relative 'player'
+
 class GameManager
 	def load_board
 		@board = Board.new.load_properties('board.json')
-		puts "Game Manager Class: Better Play Fair!".blue
+		# puts "Game Manager Class: Better Play Fair!".blue
 	end
 	def load_players
 		@players = Array.new
@@ -14,6 +17,46 @@ class GameManager
 		file_data.each do |name|
 			@players << Player.new(name, self)
 		end
+	end
+	def start_with_dice(json)
+		# Determine Game
+		determine_game_from_roll(json)
+
+		# Initialize board and players
+		load_board
+		load_players
+		
+		# Initialize variables
+		dice_rolls = get_dice_rolls
+		players = get_players
+		board = get_board
+		current_roll = 0
+		current_player = 0
+		continue = false
+
+		# Game Loop
+		while current_roll < dice_rolls.length do 
+			# Get Current Roll
+			roll = dice_rolls[current_roll]
+
+			# Game Logic
+			if players.any? { |player| player.bankrupt? }
+				break
+			end
+			players[current_player].move_by(roll, board.length)
+
+			# # Prompt for next turn or end of loop
+			# unless continue == true
+			# 	print "Press any key to continue or key \'Esc\' to go to the end of the loop: ".blue
+			# 	input_value = $stdin.getch
+			# 	continue = true if input_value == "\e"
+			# end
+
+			# Go to next player and next roll
+			current_player = (current_player + 1) % players.length
+			current_roll += 1
+		end
+		after_game_report
 	end
 	def determine_game_from_roll(json)
 		@results = Array.new
@@ -38,13 +81,14 @@ class GameManager
 	def after_game_report
 		richest_player = get_players.max { |a, b| a.get_balance <=> b.get_balance }
 		bankrupt_player = get_players.min { |a, b| a.get_balance <=> b.get_balance }
-		puts "--- THE GAME HAS ENDED ---".light_blue
-		puts " · What a close game!".light_blue
-		puts " · Unfortunately, #{bankrupt_player.get_name} ran out of money!".light_blue
-		get_players.each do |player|
-			puts " · #{player.get_name}'s has a balance of $#{player.get_balance} and finished on #{player.get_current_property.get_name}".light_blue
-		end
-		puts " · Therefore, the winner of this game is #{richest_player.get_name}!".light_blue
-		puts "--------------------------".light_blue
-	end
+		message = [
+		  "--- THE GAME HAS ENDED ---",
+		  " · What a close game!",
+		  " · Unfortunately, #{bankrupt_player.get_name} ran out of money!",
+		  *get_players.map { |player| " · #{player.get_name} has a balance of $#{player.get_balance} and finished on #{player.get_current_property.get_name}" },
+		  " · Therefore, the winner of this game is #{richest_player.get_name}!",
+		  "--------------------------\n"
+		].join("\n")
+		puts message.red
+	  end
 end
