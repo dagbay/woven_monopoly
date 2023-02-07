@@ -1,5 +1,6 @@
 require 'json'
 require 'io/console'
+require 'colorize'
 
 require_relative 'board'
 require_relative 'player'
