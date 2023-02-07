@@ -1,12 +1,13 @@
 require 'colorize'
-
 class Player 
-	def initialize(name)
+	def initialize(name, board)
 		@name = name
 		@balance = 16
 		@position = 0 
 		@properties = Array.new
 		@looped = false
+		@board = board
+		puts "Woven Monopoly: #{@name} is now playing!".green
 	end
 	# Get Functions
 	def get_balance
@@ -18,7 +19,7 @@ class Player
 	def get_position
 		@position
 	end
-	def get_properties
+	def owned_properties
 		@properties
 	end
 	def looped?
@@ -49,14 +50,14 @@ class Player
 		@properties << property
 	end
 	def move_by(num, limit)
-		puts "\n--- #{get_name}'s Turn ---".green
+		puts "\n--- #{get_name}'s Turn (Currently At: #{@board.get_property(get_position).get_name}, Position: #{get_position}, Balance: $#{get_balance}) ---".green
 		@position += num
 		puts "· #{get_name} moved #{num} times up the board.".red
 		if get_position >= limit
 			@position = get_position - limit
-			puts "· However, #{get_name} has looped around the board and is now at position: #{get_position}.".red
+			puts "· However, #{get_name} has looped around the board and is now at property: #{@board.get_property(get_position).get_name}.".red
 		else
-			puts "· #{get_name} is now at position: #{get_position}.".red
+			puts "· #{get_name} is now at property: #{@board.get_property(get_position).get_name}.".red
 		end
 		puts "--- End of Turn ---\n".green
 	end
