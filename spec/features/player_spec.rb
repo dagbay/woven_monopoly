@@ -1,6 +1,4 @@
 require 'player'
-require 'board'
-require 'game_manager'
 
 RSpec.describe Player do
 	let(:game) { double("Game") }
